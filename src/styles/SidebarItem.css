@@ -1,0 +1,24 @@
+.SidebarItem-container{
+    display: flex;
+    padding: 7px 0;
+    border-radius: 100px 100px 100px 100px;
+}
+
+.SidebarItem-container:hover{
+    background-color: rgba(231,232,235,255);
+}
+
+.sidebarItemArrow-container{
+    width: 20px;
+    
+}
+
+.SidebarItemMain-container{
+    display: flex;
+}
+
+.SidebarItemMain-container>p{
+    margin-left: 12px;
+    display: flex;
+    align-self: center;
+}

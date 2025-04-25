@@ -1,0 +1,86 @@
+.header-container{
+    display: flex;
+    height: 60px;
+    width: 100vw;
+}
+
+.header-container>div{
+    padding: 12px;
+}
+
+.headerlogo-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.headerlogo-container>img{
+    height: 100%;
+    object-fit: contain;
+}
+
+.headerlogo-container>span{
+    color: gray;
+    font-size: 20px;
+    margin-left: 16px;
+}
+
+.headersearch-container{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.headersearchbar-container{
+    width: 45%;
+    height: 120%;
+    border-radius: 24px;
+    background-color: rgba(233,238,246,255);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.MuiSvgIcon-root{
+    color: rgb(82,82,82);
+}
+
+.headersearchbar-container>input{
+    flex: 1;
+    height: 60%;
+    font-size: 16px;
+    color: rgba(55,55,56,255);
+    background: none;
+    border: none;
+    margin-left: 12px;
+}
+
+.headersearchbar-container>input:focus{
+    outline: none;
+    color: black;
+}
+
+.headericons-container{
+    display: flex;
+    align-items: center;
+    margin-right: -30px;
+}
+
+.headericons-container .MuiSvgIcon-root{
+    font-size: 28px;
+    color: rgb(82,82,82);
+    margin: 4px;
+}
+
+.headericons-container>span{
+    margin-right: 20px;
+}
+
+.headericons-container>img{
+    border-radius: 50%;
+    height: 100%;
+    object-fit: contain;
+    margin-left: 5px;
+}
+

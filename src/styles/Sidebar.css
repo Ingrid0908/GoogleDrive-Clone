@@ -1,0 +1,12 @@
+.sideBar-container{
+    width: 17%;
+    margin-right: 5px;
+}
+
+hr{
+    background-color: rgb(197,197,197);
+}
+
+.sideBarItems-container{
+    padding-left: 10px;
+}
