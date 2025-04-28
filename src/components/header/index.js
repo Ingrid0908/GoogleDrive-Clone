@@ -7,7 +7,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 
-const index = () => {
+const index = ({ userPhoto }) => {
   return (
     <div className='header-container'>
         <div className='headerlogo-container'>
@@ -27,7 +27,7 @@ const index = () => {
             <SettingsIcon/>
           </spam>
           <AppsIcon/>
-          <img src='' alt='User'/>
+          <img src={userPhoto} alt="User"/>
         </div>
 
     </div>

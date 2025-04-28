@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import '../../styles/NewFile.css';
 import { storage, db } from '../../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { serverTimestamp, collection, addDoc  } from 'firebase/firestore';
-import { ref, uploadBytes } from 'firebase/storage';
 import Modal from '@mui/material/Modal';
 import { styled } from '@mui/system';
 import { Button } from '@mui/material';
@@ -11,10 +11,10 @@ import { Button } from '@mui/material';
 const Paper = styled('div')(({ theme }) => ({
   position: 'absolute',
   width: 400,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: '#ffffff',
   border: '2px solid #000',
-  boxShadow: theme.shadows[5],
-  padding: theme.spacing(2, 4, 3),
+  boxShadow: '0px 3px 6px rgba(0,0,0,0.16)',
+  padding: '16px 32px 24px',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -33,43 +33,42 @@ const NewFile = () => {
 
   const handleUpload = () => {
     setUploading(true);
-
+  
     if (!file) {
-        alert('No file selected!');
-        return;
+      alert('No file selected!');
+      return;
     }
-
+  
     const storageRef = ref(storage, `files/${file.name}`);
-
+  
     uploadBytes(storageRef, file)
-        .then(snapshot => {
-            console.log(snapshot);
-            return storage.ref('files').child(file.name).getDownloadURL()
-                .then(url => ({
-                    snapshot,  
-                    url
-                }));
-        })
-        .then(({ snapshot, url }) => {
-            const myFilesCollection = collection(db, 'myfiles');
-            return addDoc(myFilesCollection, {
-                timestamp: serverTimestamp(),
-                caption: file.name,
-                fileUrl: url,
-                size: snapshot.bytesTransferred, 
-            });
-        })
-        .then(() => {
-            setUploading(false);
-            setOpen(false);
-            setFile(null);
-        })
-        .catch(error => {
-            console.error("Upload failed:", error);
-            setUploading(false);
+      .then(snapshot => {
+        console.log(snapshot);
+        return getDownloadURL(storageRef).then(url => ({
+          snapshot,
+          url
+        }));
+      })
+      .then(({ snapshot, url }) => {
+        const myFilesCollection = collection(db, 'myfiles');
+        return addDoc(myFilesCollection, {
+          timestamp: serverTimestamp(),
+          caption: file.name,
+          fileUrl: url,
+          size: file.size,
         });
-};
-
+      })
+      .then(() => {
+        setUploading(false);
+        setOpen(false);
+        setFile(null);
+      })
+      .catch(error => {
+        console.error("Upload failed:", error);
+        setUploading(false);
+      });
+  };
+  
 
   return (
     <div className='newFile-container'>
