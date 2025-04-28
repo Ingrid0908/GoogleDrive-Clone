@@ -1,9 +1,8 @@
 .sideIcons{
-    width: 50px;
+    width: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-left: 1px solid rgb(219, 219, 219);
 }
 
 .sideIcons__top{

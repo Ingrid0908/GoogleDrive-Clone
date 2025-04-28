@@ -46,7 +46,9 @@ function App() {
             <Header userPhoto={user.photoURL} setUser={setUser}/>
             <div className="app__main">
               <SideBar/>
-              <FilesView/>
+              <div className='app_contentArea'>
+                <FilesView/>
+              </div>
               <SideIcons/>
             </div>
           </>

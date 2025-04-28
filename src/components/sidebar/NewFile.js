@@ -97,8 +97,9 @@ const NewFile = () => {
           backgroundColor: 'white',
           color: 'rgb(82,82,82)',
           textTransform: 'none',
-          borderRadius: '24px',
+          borderRadius: '10px',
           fontWeight: 500,
+          height: '3rem'
         }}
         onClick={handleClick}
       >
