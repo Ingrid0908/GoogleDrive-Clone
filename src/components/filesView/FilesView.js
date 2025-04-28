@@ -27,7 +27,7 @@ const FilesView = () => {
         <div className='fileViewRow-container'>
             {
               files.slice(0, 4).map(item => (
-                  <FileCard name={item.caption} />
+                  <FileCard name={item.caption} key={item.id}/>
               ))
 
             }
@@ -43,7 +43,7 @@ const FilesView = () => {
         </div>
         {
           files.map(item => (
-            <FileItem id={item.id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size}/>
+            <FileItem id={item.id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} key={item.id}/>
           ))
         }
     </div>
