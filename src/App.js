@@ -43,7 +43,7 @@ function App() {
       {user ? 
         (
           <>
-            <Header userPhoto={user.photoURL}/>
+            <Header userPhoto={user.photoURL} setUser={setUser}/>
             <div className="app__main">
               <SideBar/>
               <FilesView/>

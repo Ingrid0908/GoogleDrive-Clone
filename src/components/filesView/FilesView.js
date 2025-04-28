@@ -21,13 +21,12 @@ const FilesView = () => {
       return () => unsubscribe();
     }, []);
 
-  console.log(files)
 
   return (
     <div className='fileView-container'>
         <div className='fileViewRow-container'>
             {
-              files.slice(0, 5).map(item => (
+              files.slice(0, 4).map(item => (
                   <FileCard name={item.caption} />
               ))
 

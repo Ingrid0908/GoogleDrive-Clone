@@ -84,3 +84,28 @@
     margin-left: 5px;
 }
 
+.user-modal {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 100;
+    border-radius: 6px;
+  }
+  
+  .user-modal button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .user-modal button:hover {
+    background-color: #d32f2f;
+  }
+  

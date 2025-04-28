@@ -3,53 +3,41 @@ import AddIcon from '@mui/icons-material/Add';
 import '../../styles/NewFile.css';
 import { storage, db } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { serverTimestamp, collection, addDoc  } from 'firebase/firestore';
-import Modal from '@mui/material/Modal';
-import { styled } from '@mui/system';
-import { Button } from '@mui/material';
-
-const Paper = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  width: 400,
-  backgroundColor: '#ffffff',
-  border: '2px solid #000',
-  boxShadow: '0px 3px 6px rgba(0,0,0,0.16)',
-  padding: '16px 32px 24px',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-}));
+import { serverTimestamp, collection, addDoc } from 'firebase/firestore';
+import { Menu, MenuItem, Button } from '@mui/material';
 
 const NewFile = () => {
-  const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [uploading, setUploading] = useState(false);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
-      setFile(e.target.files[0]);
+      handleUpload(e.target.files[0]);
     }
   };
 
-  const handleUpload = () => {
-    setUploading(true);
-  
+  const handleUpload = (file) => {
     if (!file) {
       alert('No file selected!');
       return;
     }
-  
+
+    setUploading(true);
     const storageRef = ref(storage, `files/${file.name}`);
-  
+
     uploadBytes(storageRef, file)
-      .then(snapshot => {
-        console.log(snapshot);
-        return getDownloadURL(storageRef).then(url => ({
-          snapshot,
-          url
-        }));
-      })
-      .then(({ snapshot, url }) => {
+      .then(() => getDownloadURL(storageRef))
+      .then((url) => {
         const myFilesCollection = collection(db, 'myfiles');
         return addDoc(myFilesCollection, {
           timestamp: serverTimestamp(),
@@ -60,11 +48,41 @@ const NewFile = () => {
       })
       .then(() => {
         setUploading(false);
-        setOpen(false);
-        setFile(null);
+        handleClose();
       })
-      .catch(error => {
-        console.error("Upload failed:", error);
+      .catch((error) => {
+        console.error('Upload failed:', error);
+        setUploading(false);
+      });
+  };
+  const handleFolderUpload = (e) => {
+    const files = e.target.files;
+    if (!files.length) return;
+  
+    setUploading(true);
+  
+    const uploadPromises = Array.from(files).map((file) => {
+      const storageRef = ref(storage, `folders/${file.webkitRelativePath}`);
+      return uploadBytes(storageRef, file).then(() => getDownloadURL(storageRef))
+        .then((url) => {
+          const myFilesCollection = collection(db, 'myfiles');
+          return addDoc(myFilesCollection, {
+            timestamp: serverTimestamp(),
+            caption: file.name,
+            fileUrl: url,
+            size: file.size,
+            path: file.webkitRelativePath,
+          });
+        });
+    });
+  
+    Promise.all(uploadPromises)
+      .then(() => {
+        setUploading(false);
+        handleClose();
+      })
+      .catch((error) => {
+        console.error('Folder upload failed:', error);
         setUploading(false);
       });
   };
@@ -72,26 +90,71 @@ const NewFile = () => {
 
   return (
     <div className='newFile-container'>
-      <div className='addNewFile-container' onClick={() => setOpen(true)}>
-        <AddIcon />
-        <p>New</p>
-      </div>
-      <Modal 
-        open={open} 
-        onClose={() => setOpen(false)}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description">
-        <Paper>
-          <p>Select files you want to upload!</p>
-          {
-            uploading ? (<p>Uploading...</p>) : 
-            (<>
-                <input type='file' onChange={handleChange} />
-                <Button onClick={handleUpload}>Upload</Button>
-            </>)
-          }
-        </Paper>
-      </Modal>
+      <Button
+        startIcon={<AddIcon />}
+        variant='contained'
+        style={{
+          backgroundColor: 'white',
+          color: 'rgb(82,82,82)',
+          textTransform: 'none',
+          borderRadius: '24px',
+          fontWeight: 500,
+        }}
+        onClick={handleClick}
+      >
+        New
+      </Button>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            borderRadius: 8,
+            minWidth: 220,
+            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+          },
+        }}
+      >
+        <MenuItem>
+        {
+          uploading ? (
+          <div style={{width: '100%', textAlign: 'center'}}>
+            <span className='loader'></span> Uploading...
+          </div>)
+          :
+          (
+            <label style={{ width: '100%', cursor: 'pointer' }}>
+              File upload
+              <input 
+                type='file' 
+                style={{ display: 'none' }} 
+                onChange={handleChange}
+              />
+            </label>)
+        }
+        
+        </MenuItem>
+        <MenuItem >
+          <label style={{ width: '100%', cursor: 'pointer' }}>
+            Folder upload
+            <input 
+              type='file' 
+              webkitdirectory= 'true'
+              directory= ''
+              style={{ display: 'none' }} 
+              onChange={handleFolderUpload}
+            />
+          </label>
+        </MenuItem>
+        <MenuItem disabled>Google Docs</MenuItem>
+        <MenuItem disabled>Google Sheets</MenuItem>
+        <MenuItem disabled>Google Slides</MenuItem>
+        <MenuItem disabled>Google Forms</MenuItem>
+        <MenuItem disabled>More</MenuItem>
+
+      </Menu>
     </div>
   );
 };
