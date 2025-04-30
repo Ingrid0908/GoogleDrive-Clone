@@ -22,3 +22,24 @@
     display: flex;
     align-self: center;
 }
+
+.SidebarItem-wrapper {
+    position: relative;
+}
+  
+.SidebarItem-tooltip {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    margin-left: 8px;
+    padding: 4px 8px;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+  

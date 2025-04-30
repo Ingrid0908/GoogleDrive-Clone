@@ -3,7 +3,8 @@ import './App.css';
 import FilesView from './components/filesView/FilesView';
 import Header from './components/header/index'
 import SideBar from './components/sidebar/index'
-import SideIcons from './components/sideIcons/index'
+import SideIcons from './components/sideIcons'
+import RecentsView from './components/filesView/RecentsView';
 
 
 import { auth, provider } from "./firebase";
@@ -12,15 +13,17 @@ import { signInWithPopup, signOut } from 'firebase/auth';
 
 function App() {
   const [user, setUser] = useState({
-    displayName: "Ingrid Fernandez",
-    email: "ingrid09@gmail.com",
+    displayName: "Dummy",
+    email: "dummy@email.com",
     emailVerified: true,
     phoneNumber: null,
     photoURL: "/images/profile.png"
   })
+
+  const [recent, setRecent] = useState(false);
   
   const handleLogin = () => {
-    if (!user) {
+    if (!user ) {
       signInWithPopup(auth, provider)
         .then((result) => {
           setUser(result.user);
@@ -40,14 +43,16 @@ function App() {
 
   return (
     <div className="App">
-      {user ? 
+      {(user && user.displayName !== "Dummy") ? 
         (
           <>
             <Header userPhoto={user.photoURL} setUser={setUser}/>
             <div className="app__main">
-              <SideBar/>
+              <SideBar setRecent={setRecent}/>
               <div className='app_contentArea'>
-                <FilesView/>
+                {
+                  recent ? <RecentsView/> : <FilesView/>
+                }
               </div>
               <SideIcons/>
             </div>

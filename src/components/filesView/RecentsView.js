@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import FileItem from './FileItem';
-import FileCard from './FileCard';
+
 import '../../styles/FilesView.css'
 
-const FilesView = () => {
-  const [files, setFiles] = useState([]);
+const RecentsView = () => {
+    const [files, setFiles] = useState([]);
 
-  useEffect(() => {
+    useEffect(() => {
       const q = query(collection(db, 'myfiles'), orderBy('timestamp', 'desc'));
   
       const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -21,17 +21,10 @@ const FilesView = () => {
       return () => unsubscribe();
     }, []);
 
-
   return (
     <div className='fileView-container'>
-        <div className='fileViewRow-container'>
-            {
-              files.slice(0, 4).map(item => (
-                  <FileCard name={item.caption} fileUrl={item.fileUrl} key={item.id}/>
-              ))
-
-            }
-        </div>
+        <p style={{fontSize: '25px', color: 'rgb(85, 78, 78)'}}>Recent</p>
+        <br/>
         <div className='fileViewTitles-container'>
             <div className='fileViewTitlesLeft-container'>
                 <p>Name</p>
@@ -42,12 +35,13 @@ const FilesView = () => {
             </div>
         </div>
         {
-          files.map(item => (
-            <FileItem id={item.id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} key={item.id}/>
-          ))
+            files.map(item => (
+                <FileItem id={item.id} caption={item.caption} timestamp={item.timestamp} fileUrl={item.fileUrl} size={item.size} key={item.id}/>
+            ))
+
         }
     </div>
   )
 }
 
-export default FilesView
+export default RecentsView

@@ -9,23 +9,25 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
+import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 
-const index = () => {
+const index = ({setRecent}) => {
   return (
     <div className='sideBar-container'>
         <NewFile/>
         <div className='sideBarItems-container'>
-            <SidebarItem arrow icon={(<InsertDriveFileIcon />)} label={'My Drive'}/>
-            <SidebarItem arrow icon={(<DevicesIcon />)} label={'Computers'}/>
+            <SidebarItem icon={(<HomeFilledIcon />)} label={'Home'} onClick={setRecent}/>
+            <SidebarItem arrow icon={(<InsertDriveFileIcon />)} label={'My Drive'} onClick={setRecent}/>
+            <SidebarItem arrow icon={(<DevicesIcon />)} label={'Computers'} onClick={setRecent}/>
             <br/>
-            <SidebarItem icon={(<PeopleAltOutlinedIcon />)} label={'Shared with me'}/>
-            <SidebarItem icon={(<QueryBuilderIcon />)} label={'Recent'}/>
-            <SidebarItem icon={(<StarBorderIcon />)} label={'Starred'}/>
+            <SidebarItem icon={(<PeopleAltOutlinedIcon />)} label={'Shared with me'} onClick={setRecent}/>
+            <SidebarItem icon={(<QueryBuilderIcon />)} label={'Recent'} onClick={setRecent}/>
+            <SidebarItem icon={(<StarBorderIcon />)} label={'Starred'} onClick={setRecent}/>
             <br/>
-            <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Trash'}/>
+            <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Trash'} onClick={setRecent}/>
             
 
-            <SidebarItem icon={(<CloudQueueIcon />)} label={'Storage'}/>
+            <SidebarItem icon={(<CloudQueueIcon />)} label={'Storage'} onClick={setRecent}/>
         </div>
     </div>
   )

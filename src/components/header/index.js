@@ -58,8 +58,8 @@ const Header = ({ userPhoto, setUser }) => {
 
       <div className='headericons-container'>
         <span>
-          <HelpOutlineIcon />
-          <SettingsIcon />
+            <HelpOutlineIcon />
+            <SettingsIcon />
         </span>
         <AppsIcon />
         <img
