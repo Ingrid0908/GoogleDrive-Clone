@@ -7,11 +7,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
+import SearchBar from './SearchBar';
 
 import { auth} from '../../firebase';
 import { signOut } from 'firebase/auth';
 
-const Header = ({ userPhoto, setUser }) => {
+const Header = ({ userPhoto, setUser, setPathStack, setAView }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
 
@@ -49,11 +50,7 @@ const Header = ({ userPhoto, setUser }) => {
       </div>
 
       <div className='headersearch-container'>
-        <div className='headersearchbar-container'>
-          <SearchIcon />
-          <input type='text' placeholder='Search in Drive' />
-          <ExpandMoreIcon />
-        </div>
+          <SearchBar onSelect={setPathStack} setView={setAView}/>
       </div>
 
       <div className='headericons-container'>

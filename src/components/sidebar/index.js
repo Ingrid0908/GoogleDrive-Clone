@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/Sidebar.css';
 import NewFile from './NewFile';
 import SidebarItem from './SidebarItem';
@@ -10,27 +10,75 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
+import FolderIcon from '@mui/icons-material/Folder';
+import { db } from '../../firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
 
-const index = ({setRecent}) => {
+const Index = ({ setActiveView, pathStack, setPathStack }) => {
+  const [folders, setFolders] = useState([]);
+  const [showFolders, setShowFolders] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'myfiles'), (snapshot) => {
+      const folderMap = new Map();
+      snapshot.docs.forEach(doc => {
+        const file = doc.data();
+        const pathParts = file.path?.split('/') || [];
+        if (pathParts.length > 1) {
+          const folderPath = pathParts.slice(0, -1).join('/');
+          folderMap.set(folderPath, pathParts[pathParts.length - 2]);
+        }
+      });
+      const folderList = Array.from(folderMap.entries()).map(([fullPath, name], idx) => ({ id: `folder-${idx}`, name, fullPath }));
+      setFolders(folderList);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const toggleShowFolders = () => setShowFolders(prev => !prev);
+
   return (
     <div className='sideBar-container'>
-        <NewFile/>
-        <div className='sideBarItems-container'>
-            <SidebarItem icon={(<HomeFilledIcon />)} label={'Home'} onClick={setRecent}/>
-            <SidebarItem arrow icon={(<InsertDriveFileIcon />)} label={'My Drive'} onClick={setRecent}/>
-            <SidebarItem arrow icon={(<DevicesIcon />)} label={'Computers'} onClick={setRecent}/>
-            <br/>
-            <SidebarItem icon={(<PeopleAltOutlinedIcon />)} label={'Shared with me'} onClick={setRecent}/>
-            <SidebarItem icon={(<QueryBuilderIcon />)} label={'Recent'} onClick={setRecent}/>
-            <SidebarItem icon={(<StarBorderIcon />)} label={'Starred'} onClick={setRecent}/>
-            <br/>
-            <SidebarItem icon={(<DeleteOutlineIcon />)} label={'Trash'} onClick={setRecent}/>
-            
-
-            <SidebarItem icon={(<CloudQueueIcon />)} label={'Storage'} onClick={setRecent}/>
-        </div>
+      <NewFile />
+      <div className='sideBarItems-container'>
+        <SidebarItem icon={<HomeFilledIcon />} label={'Home'} setActiveView={setActiveView} />
+        <SidebarItem
+          arrow
+          icon={<InsertDriveFileIcon />}
+          label={'My Drive'}
+          setActiveView={setActiveView}
+          onArrowClick={toggleShowFolders}
+          state={showFolders}
+        />
+        {showFolders && (
+          <div className="sidebar-folderList">
+            {folders.map(folder => (
+              <div
+                key={folder.id}
+                className="SidebarItem-subfolder"
+                onClick={() => {
+                  setActiveView('drive');
+                  setPathStack(folder.fullPath.split('/'));
+                }}
+              >
+                <FolderIcon fontSize="small" />
+                <p>{folder.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
+        <SidebarItem icon={<DevicesIcon />} label={'Computers'} setActiveView={setActiveView} />
+        <br />
+        <SidebarItem icon={<PeopleAltOutlinedIcon />} label={'Shared with me'} setActiveView={setActiveView} />
+        <SidebarItem icon={<QueryBuilderIcon />} label={'Recent'} setActiveView={setActiveView} />
+        <SidebarItem icon={<StarBorderIcon />} label={'Starred'} setActiveView={setActiveView} />
+        <br />
+        <SidebarItem icon={<DeleteOutlineIcon />} label={'Trash'} setActiveView={setActiveView} />
+        <SidebarItem icon={<CloudQueueIcon />} label={'Storage'} setActiveView={setActiveView} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default index
+export default Index;

@@ -10,3 +10,23 @@ hr{
 .sideBarItems-container{
     padding-left: 10px;
 }
+
+.SidebarItem-subfolders {
+    padding-left: 24px;
+}
+
+.SidebarItem-subfolder {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 2px 0;
+    color: #444;
+    margin-left: 38px;
+}
+
+.SidebarItem-subfolder:hover {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+}
+  

@@ -10,6 +10,7 @@
     display: flex;
     text-decoration: none;
     color: rgb(85, 78, 78);
+    cursor: default;
 }
 
 .fileItem>a>div{
@@ -23,4 +24,9 @@
 
 .fileItem--left{
     flex: 1;
+}
+
+p:hover{
+    cursor: default;
+    display: block;
 }

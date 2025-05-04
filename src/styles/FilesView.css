@@ -25,3 +25,21 @@
 .fileViewTitlesRight-container{
     display: flex;
 }
+.breadcrumb {
+    margin: 10px 0 20px 0;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.breadcrumb span:hover {
+    text-decoration: none;
+}
+
+.breadcrumb>span {
+    color: rgb(82,82,82);
+    font-size: 20px;
+}
+  

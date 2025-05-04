@@ -42,4 +42,22 @@
     z-index: 100;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
+
+.SidebarItem-subfolders {
+    padding-left: 24px;
+}
+
+.SidebarItem-subfolder {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 2px 0;
+    color: #444;
+}
+
+.SidebarItem-subfolder:hover {
+    background-color: #f0f0f0;
+    border-radius: 6px;
+}
   
