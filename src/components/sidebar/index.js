@@ -42,7 +42,7 @@ const Index = ({ setActiveView, pathStack, setPathStack }) => {
     <div className='sideBar-container'>
       <NewFile />
       <div className='sideBarItems-container'>
-        <SidebarItem icon={<HomeFilledIcon />} label={'Home'} setActiveView={setActiveView} />
+        <SidebarItem icon={<HomeFilledIcon />} label={'Home'} setActiveView={setActiveView} setPathStack={setPathStack}/>
         <SidebarItem
           arrow
           icon={<InsertDriveFileIcon />}
@@ -68,14 +68,14 @@ const Index = ({ setActiveView, pathStack, setPathStack }) => {
             ))}
           </div>
         )}
-        <SidebarItem icon={<DevicesIcon />} label={'Computers'} setActiveView={setActiveView} />
+        <SidebarItem icon={<DevicesIcon />} label={'Computers'} setActiveView={setActiveView} setPathStack={setPathStack}/>
         <br />
-        <SidebarItem icon={<PeopleAltOutlinedIcon />} label={'Shared with me'} setActiveView={setActiveView} />
-        <SidebarItem icon={<QueryBuilderIcon />} label={'Recent'} setActiveView={setActiveView} />
-        <SidebarItem icon={<StarBorderIcon />} label={'Starred'} setActiveView={setActiveView} />
+        <SidebarItem icon={<PeopleAltOutlinedIcon />} label={'Shared with me'} setActiveView={setActiveView} setPathStack={setPathStack}/>
+        <SidebarItem icon={<QueryBuilderIcon />} label={'Recent'} setActiveView={setActiveView} setPathStack={setPathStack}/>
+        <SidebarItem icon={<StarBorderIcon />} label={'Starred'} setActiveView={setActiveView} setPathStack={setPathStack}/>
         <br />
-        <SidebarItem icon={<DeleteOutlineIcon />} label={'Trash'} setActiveView={setActiveView} />
-        <SidebarItem icon={<CloudQueueIcon />} label={'Storage'} setActiveView={setActiveView} />
+        <SidebarItem icon={<DeleteOutlineIcon />} label={'Trash'} setActiveView={setActiveView} setPathStack={setPathStack}/>
+        <SidebarItem icon={<CloudQueueIcon />} label={'Storage'} setActiveView={setActiveView} setPathStack={setPathStack}/>
       </div>
     </div>
   );

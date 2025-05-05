@@ -3,15 +3,17 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import '../../styles/SidebarItem.css';
 
-const SidebarItem = ({ arrow, icon, label, setActiveView, onArrowClick, state }) => {
+const SidebarItem = ({ arrow, icon, label, setActiveView, onArrowClick, state, setPathStack }) => {
   const [isHovering, setIsHovering] = useState(false);
 
   const handleClick = () => {
     if (label === 'Recent') {
+      setPathStack([]);
       setActiveView('recents');
     } else if (label === 'My Drive') {
       setActiveView('drive');
     } else {
+      setPathStack([]);
       setActiveView('home');
     }
   };

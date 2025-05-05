@@ -38,6 +38,8 @@ function App() {
     }
   };
 
+  console.log(pathStack)
+
   return (
     <div className="App">
       {(user && user.displayName !== "Dummy") ? (
