@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../styles/FileItem.css'
+import '../../styles/FolderItem.css'
 
 import FolderIcon from '@mui/icons-material/Folder';
 
@@ -10,17 +10,15 @@ const FolderItem = ({ folder, onClick}) => {
 
 
     return (
-        <div className='fileItem' onClick={() => onClick(folder)}>
-            <a target="_blank" rel="noreferrer" download>
-                <div className="fileItem--left">
+        <div className='folderItem' onClick={() => onClick(folder)}>
+                <div className="folderItem--left">
                     <FolderIcon />
                     <p>{folder.name}</p>
                 </div>
-                <div className="fileItem--right">
+                <div className="folderItem--right">
                     <p>{fileDate}</p>
                     <p>  ______  </p>
                 </div>
-            </a>
         </div>
     )
 }

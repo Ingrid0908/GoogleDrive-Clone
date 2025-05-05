@@ -1,0 +1,36 @@
+.folderItem{
+    height: 55px;
+    border-bottom: 1px solid rgb(219, 219, 219);
+    border-top: 1px solid rgb(219, 219, 219);
+    width: 100%;
+}
+
+.folderItem{
+    height: 100%;
+    display: flex;
+    text-decoration: none;
+    color: rgb(85, 78, 78);
+    cursor: default;
+}
+
+.folderItem>div{
+    display: flex;
+    align-items: center;
+}
+
+.folderItem>div>*{
+    margin: 10px;
+}
+
+.folderItem--left{
+    flex: 1;
+}
+
+p:hover{
+    cursor: default;
+    display: block;
+}
+
+.folderItem:hover {
+    background-color: #f0f0f0;
+}

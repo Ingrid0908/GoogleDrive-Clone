@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 import FileItem from './FileItem';
-import FileCard from './FileCard';
 import FolderItem from './FolderItem';
 import '../../styles/FilesView.css';
 
