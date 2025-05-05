@@ -30,3 +30,7 @@ p:hover{
     cursor: default;
     display: block;
 }
+
+.fileItem:hover {
+    background-color: #f0f0f0;
+}
